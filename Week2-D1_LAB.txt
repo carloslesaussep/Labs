@@ -1,0 +1,160 @@
+Q01 -                   Type of data        How often changes       One check before using it
+    MySQL               Struct              Freq
+    Suppliers CSV       Struct              On demand
+    Website Json        Semi Struct         Freq
+    Excel stock         Struct              On demand
+Q02 - 
+    A - DE
+    B - DA
+    C - DS
+    D - DE
+    E - DE
+
+Q03 - 
+
+import pandas as pd
+
+batch1 = {
+    "order_id": [101, 102],
+    "city": ["London", "Manchester"],
+    "amount_gbp": [45.50, 18]
+}
+
+batch2 = {
+    "order_id": [103, 104],
+    "city": ["Bristol", "London"],
+    "amount_gbp": [62.25, 27.40]
+}
+
+batch3 = {
+    "order_id": [105, 106],
+    "city": ["Leeds", "Manchester"],
+    "amount_gbp": [34.80, 51.10]
+}
+
+df_batch1 = pd.DataFrame(batch1)
+df_batch2 = pd.DataFrame(batch2)
+df_batch3 = pd.DataFrame(batch3)
+
+print("Batch 1: ", len(df_batch1))
+print("Batch 2: ", len(df_batch2))
+print("Batch 3: ", len(df_batch3))
+
+cumul_batches = pd.concat([df_batch1, df_batch2, df_batch3], ignore_index= True)
+print(cumul_batches)
+
+Q04 - B
+Q05 - 
+    Read new order records
+    Store the received records
+    Clean invalid values
+    Create daily sales summary
+    Check that the run completed
+    Make the summary available to analysts
+
+Q06 - 
+                What Happens                            Simple Check
+    Source      Supplier sends order file               Check existance of file
+    Ingestion   Read the file                           Review the output in program before data process
+    Stirage     Store data in available units           Check it has been relocated or duplicated in intended storage unit
+    Processing  Clean the data                          Check output to see if non wanted data was removed
+    Serving     Create output                           Aditional file is created
+    Monitoring  Review that workflow runs as intended   
+
+Q07 -
+batch1["batch_id"]= "batch_1"
+batch2["batch_id"]= "batch_2"
+batch3["batch_id"]= "batch_3"
+
+cumul_batches = pd.concat([df_batch1, df_batch2, df_batch3], ignore_index= True)
+print(cumul_batches)
+
+res = (cumul_batches..groupby("batch_id", as_index=False).agg(row_count=("order_id", "count"), sales_gbp=("amount_gbp", "sum"),))
+
+Q08 - A
+
+Q09 - 
+
+import pandas as pd
+import numpy as np
+
+orders = pd.DataFrame({
+    "order_id": [201, 202, 203, 204],
+    "city": [" London ", "Manchester", "Leeds", None],
+    "amount_gbp": [45.50, -5.00, 30.00, 20.00],
+})
+
+orders["valid_orders"] = np.where(orders["amount_gbp"] > 0, "Valid", "Invalid")
+
+orders["rejected_orders"] = np.where(orders["valid_orders"] == "Valid", True, False)
+
+
+print(orders)
+
+
+Q10 - 
+Batch
+Streaming
+Batch
+Streaming
+
+Q11 - 
+
+import pandas as pd
+
+batch_1 = [10, 20, 30]
+batch_2 = [40, 50]
+batch_3 = [60, 70, 80, 90]
+
+dff_batch1 = pd.DataFrame(batch_1)
+dff_batch2 = pd.DataFrame(batch_2)
+dff_batch3 = pd.DataFrame(batch_3)
+
+batches = [batch_1, batch_2, batch_3]
+
+sum_tot = 0
+
+for x, single_batch in enumerate(batches, start=1):
+    batch_tot = sum(single_batch)
+    sum_tot += batch_tot
+    print(x, len(single_batch), batch_tot, sum_tot)
+
+Q12 - C
+
+Q13 - 
+    A - OLTP
+    B - OLTP
+    C - OLAP
+    D - OLAP
+
+Q14 - 
+    A - ETL
+    B - ELT
+
+Q15 - 
+
+ingestion: Sqoop, Kafka
+storage: filesystems, NoSQL
+processing: MapRed
+serving: Pig, Hive
+monitoring:
+
+Q16 - D
+
+Q17 - 
+
+check that all data has been properly dumped and why batch 2 has processing failed and 3 did not even start
+review in which part of the process has the data been corrupted or the code did not function
+solve the issue
+relaunch the code if needed, and if the results were intended according to the status of production or returns from clients in case of batch 3 let it continue running
+
+Q18 - B
+
+Q19 - 
+
+Q20 - 
+    Batch
+    Streaming
+    Batch
+    Streaming
+    Batch

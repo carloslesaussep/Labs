@@ -42,7 +42,7 @@ print(df_cl_sal_col["College"].isnull().sum())
 #filtering data:
 #9
 print("Celtics players: ")
-print(df_cl_sal_col[df_cl_sal_col["Team"] == "Celtics"])
+print(df_cl_sal_col[df_cl_sal_col["Team"] == "Boston Celtics"])
 
 #10
 print("Players over 30: ")
@@ -69,31 +69,39 @@ print(top_1_age.head(1))
 
 #Group By
 #15
+print("Find the average salary per team")
 gp_salary_per_team = df_cl_sal_col.groupby("Team")["Salary"].mean().reset_index(name='Mean Salary')
-print(gp_salary_team.sort_values(by = "Mean Salary", ascending = False))
+print(gp_salary_per_team.sort_values(by = "Mean Salary", ascending = False))
 
 #16
+print("Count number of players in each team")
 gp_players_per_team = df_cl_sal_col.groupby("Team")["Name"].count().reset_index(name='Players per Team')
 print(gp_players_per_team.sort_values(by = "Players per Team", ascending = False))
 
 #17
+print("Find the maximum salary in each team")
 gp_maxsalary_per_team = df_cl_sal_col.groupby("Team")["Salary"].max().reset_index(name='Max Salary')
 print(gp_maxsalary_per_team)
 
 #Aggregations
 #18
+print("What is the average age of players?")
 print(round(df_cl_sal_col["Age"].mean(), ))
 
 #19
+print("What is the maximum salary in the dataset?")
 print(round(df_cl_sal_col["Salary"].max(), ))
 #20
+print("What is the minimum weight?")
 print(round(df_cl_sal_col["Weight"].min(), ))
 
 #Column Operations:
 #21
+print("Create a new column Age_in_5_years")
 df_cl_sal_col["AgeInFive"] = df_cl_sal_col["Age"]+5
 print(df_cl_sal_col)
 #22
+print("Create a new column Salary_in_Millions (Salary / 100000).")
 df_cl_sal_col["SalaryInMilions"] = round(df_cl_sal_col["Salary"]/1000000, 3)
 print(df_cl_sal_col)
 
