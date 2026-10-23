@@ -1,0 +1,76 @@
+- Q1.1
+Resource preservation - analytical data usually requires more CPU and RAM due to involving files that may contain larger ammount of entries, what may lead to transactional data not being processed at fast as it could due to being processed within the same files and same systems as analytical data.
+Non optimal environment - OLTP may need highly normalized schemas (i.e. NF) and few indexes to make its processing more efficient, while OLAP needs denormalized schemas (e.g. Star schema), and columnar layouts. 
+
+- Q1.2
+	*Goal*					*Usual data size and type*	*Necessary operations*
+OLAP	Understand the business through		Historical data (big data	Heavy filed complex reads
+	historic data				chunks)
+
+OLTP	Run a business daily operations		Small ongoing daily data	Multiple fast read and writes
+
+
+- Q1.3
+
+[ App / Users ] ──> [ OLTP Database ]   ──>  ( Pipeline )    ──>    [ Data Lake / Data Warehouse ] ──> [ BI Dashboards / Analysts ]
+
+- Q1.4
+-PostgreSQL /SQLServer/MySql
+-Data warehouse  
+-Data lake 
+
+----------------------------------------
+- Q2.1
+Clickstream systems are basically focused on registering the clicks among webs, checking access route points, timestamps, actions took by the user, etc.
+Considering that BASE systems prioritize availability and speed, a clickstream system being in need of such conditions make it the best fit.
+
+- Q2.2
+ACID Databases prioritize Consistency. Every single write must be immediately verified, locked, and fully consistent across the database.
+
+- Q2.3
+Eventual consistency is key characteristic of the BASE model, which involves prioritizing instant availability and speed over immediate data synchronization.
+
+----------------------------------------
+- Q3.1
+		
+	-CSV:
+		Structure: Structured
+		Readability: Human-readable 
+		Size: Large / bulky
+		Scheme base: Row based
+		
+	-JSON:
+		Structure: Semi-structured
+		Readability: Human-readable 
+		Size: Large / bulky (due to repeating keys for every record)
+		Scheme base: Row based  
+		
+	-Avro:  
+		Structure: Structured / Semi-structured (JSON-defined schema + binary data)
+		Readability: Human-readable schema (.avsc) but unreadable data (.avro)
+		Size: Compact binary, very efficient compression
+		Scheme base: Row based
+		
+	-Parquet:  
+		Structure: Structured
+		Readability: Unreadable (binary format)
+		Size: Extremely light, highly compressed
+		Scheme base: Column based 
+		
+- Q3.2
+Considering that analytic systems are used for larger data files and numbers rather than multiple fast paced light file based reads, becasuse on column based formates data of the exact same type (e.g. customer_id, customer_name etc.) are stored in a sequence one right to another in a column, compression algorithms work exceptionally well, which provide storage and processing benefits.
+
+- Q3.3
+Readability: While JSON is text based and human readable where data is stored as key values, AVRO is a binary encoded format where only the schema can be considered readable due to being stored in JSON format, the separate file type present in AVRO where the whole content is stored is non readable.
+
+Size and storage efficiency:  While JSON is heavy due to every single record repeating the keys, AVRO is compact, just repeating the keys the needed amount of times due to the schema being stored in raw format and having all the weight of the file (real content and values) stored in binary.
+
+- Q3.4
+Parquet can achieve massive storage savings and faster queries because its columnar layout groups identical data types together. This minimizes disk I/O bottlenecks and allows more data to fit into memory caches for high-speed analytical processing.
+
+----------------------------------------
+- Q4.1
+
+- Q4.2
+
+- Q4.3
