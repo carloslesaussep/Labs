@@ -1,0 +1,60 @@
+
+version: 2
+
+models:
+  - name: stg_sales
+    columns:
+      - name: order_id
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_name
+        data_tests:
+          - not_null
+      - name: quantity
+        data_tests:
+          - not_null
+      - name: unit_price
+        data_tests:
+          - not_null
+      - name: sales_amount
+        data_tests:
+          - not_null
+
+  - name: product_level_metrics
+    description: "Métricas de ventas y rendimiento agregadas a nivel de producto."
+    columns:
+      - name: product_id
+        description: "Identificador único del producto."
+        data_tests:
+          - unique
+          - not_null
+      - name: unit_sales
+        description: "Cantidad total de unidades vendidas de este producto."
+        data_tests:
+          - not_null
+      - name: product_revenue
+        description: "Ingresos totales generados por este producto."
+        data_tests:
+          - not_null
+
+  - name: customer_level_metric
+    description: "Métricas de comportamiento de compra y valor agregadas por cliente."
+    columns:
+      - name: customer_id
+        description: "Identificador único del cliente."
+        data_tests:
+          - unique
+          - not_null
+      - name: order_count
+        description: "Número total de pedidos realizados por el cliente."
+        data_tests:
+          - not_null
+      - name: total_sales
+        description: "Importe total gastado por el cliente."
+        data_tests:
+          - not_null
+      - name: average_order
+        description: "Valor medio por pedido u operación del cliente."
+        data_tests:
+          - not_null
