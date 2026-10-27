@@ -1,0 +1,13 @@
+services:
+  sleek-airflow:
+    build: .  # Le dice a Docker que use el Dockerfile del directorio actual
+    image: airflowworkplace:latest  # Etiqueta local para la imagen construida
+    container_name: sleek-airflow
+    restart: unless-stopped
+    environment:
+      - AIRFLOW_HOME=/opt/airflow
+    volumes:
+      - ./airflow:/opt/airflow
+    ports:
+      - "8080:8080"
+    command: airflow standalone

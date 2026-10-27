@@ -1,0 +1,5 @@
+pandas
+dbt-core
+dbt-duckdb
+sqlalchemy
+psycopg2-binary

@@ -1,0 +1,15 @@
+FROM apache/airflow:latest
+
+# 1. Usar root para instalar herramientas del sistema (como git)
+USER root
+RUN apt-get update && \
+    apt-get -y install --no-install-recommends git && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# 2. Cambiar al usuario 'airflow' antes de instalar paquetes de Python
+USER airflow
+
+# 3. Copiar el archivo de requerimientos e instalar las dependencias (incluyendo SQL y dbt)
+COPY --chown=airflow:root requirements.txt /opt/airflow/requirements.txt
+RUN pip install --no-cache-dir -r /opt/airflow/requirements.txt
