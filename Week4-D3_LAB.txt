@@ -1,0 +1,85 @@
+Q1
+Scale up
+Scale out
+Scale up
+Scale out
+
+Q2
+6 blocks (5.47)
+
+Q3
+file_size = 1025
+block_size = 128
+ 
+blocks = (file_size_mb + block_size_mb - 1) / block_size_mb
+blocks = round(blocks, 0)
+ 
+print(f "Required {int(blocks_required)} blocks")
+
+Q4
+D
+
+Q5
+NameNode
+DataNode
+NameNode
+DataNode
+DataNode
+
+Q6
+Client asks NameNode for block locations
+NameNode returns block locations   
+Client reads blocks from DataNodes
+Client combines the block data
+
+Q7
+
+Q8
+A
+
+Q9
+B due to the amount of files and their management requirements
+
+Q10
+A: 10 × 2 = 20 block entries
+ 
+B: 1000 × 1 = 1000 block entries
+
+Q11
+A
+
+Q12
+C
+
+Q13
+2100
+
+Q14
+files_mb = [100, 250, 400]
+replication_factor = 3
+ 
+original_total = sum(files_mb)
+ 
+replicated_total = (original_total * replication_factor)
+ 
+print(f"Original: {original_total} MBs")
+print(f"Replicated: {replicated_total} MBs")
+
+Q15
+DataNode stops sending heartbeats
+NameNode marks DataNode unavailable
+NameNode identifies under-replicated blocks
+Replacement replicas are created
+
+Q16
+B
+
+Q17
+10 TBs
+15 TBs
+
+Q18
+
+Q19
+
+Q20
