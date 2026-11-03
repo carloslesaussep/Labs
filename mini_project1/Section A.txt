@@ -15,9 +15,9 @@ OLTP	Run a business daily operations		Small ongoing daily data	Multiple fast rea
 [ App / Users ] ──> [ OLTP Database ]   ──>  ( Pipeline )    ──>    [ Data Lake / Data Warehouse ] ──> [ BI Dashboards / Analysts ]
 
 - Q1.4
--PostgreSQL /SQLServer/MySql
--Data warehouse  
--Data lake 
+-PostgreSQL /SQLServer/MySQL - store live operational data so your application or website runs smoothly moment to moment.
+-Data warehouse - organize clean, historical data into tables to power business dashboards and reports.
+-Data lake - store massive amounts of cheap, raw data in any format for future data processing or AI.
 
 ----------------------------------------
 - Q2.1
@@ -66,11 +66,24 @@ Readability: While JSON is text based and human readable where data is stored as
 Size and storage efficiency:  While JSON is heavy due to every single record repeating the keys, AVRO is compact, just repeating the keys the needed amount of times due to the schema being stored in raw format and having all the weight of the file (real content and values) stored in binary.
 
 - Q3.4
-Parquet can achieve massive storage savings and faster queries because its columnar layout groups identical data types together. This minimizes disk I/O bottlenecks and allows more data to fit into memory caches for high-speed analytical processing.
+Parquet can achieve massive storage savings and faster queries because its columnar layout groups identical data types together. This minimizes disk Input Output bottlenecks and allows more data to fit into memory caches for high-speed analytical processing.
 
 ----------------------------------------
 - Q4.1
+Orders table: Partition by order_date (monthly or yearly) to isolate time periods so queries skip scanning irrelevant historical data
+
+Clickstream data: Partition by event_timestamp (daily or monthly) to handle high-volume data growth and easily drop old logs
 
 - Q4.2
+Customer lookups: Create a composite index on customer_id and email for fast single-row retrieval during logins or searches
+
+Order filtering: Create a composite index on (customer_id, order_date) to speed up filtered time-range searches per user
+
+Joins: Index foreign key columns like customer_id and product_id to optimize merge operations across tables
 
 - Q4.3
+Write Penalty : Every write forces the database to update all related indexes, slowing down data ingestion
+
+Storage Overhead: Indexes consume extra disk space, which can accumulate quickly on large tables.
+
+Low Cardinality: Indexing columns with few unique values  is ignored by the query optimizer and wastes resources

@@ -68,6 +68,28 @@ SELECT sales_month, total_revenue, COALESCE(LAG(total_revenue) OVER (ORDER BY sa
 FROM monthly_sales;
 
 --Q1.3
+WITH customer_months AS (
+
+    SELECT DISTINCT 
+        customer_id, 
+        (CAST(strftime('%Y', order_date) AS INTEGER) * 12 + CAST(strftime('%m', order_date) AS INTEGER)) AS month_index
+    FROM orders
+),
+consecutive_orders AS (
+
+    SELECT 
+        customer_id,
+        month_index,
+        LAG(month_index) OVER (PARTITION BY customer_id ORDER BY month_index) AS prev_month_index
+    FROM customer_months
+)
+
+SELECT DISTINCT 
+    c.customer_id, 
+    c.customer_name
+FROM consecutive_orders co
+JOIN customers c ON co.customer_id = c.customer_id
+WHERE co.month_index = co.prev_month_index + 1;
 
 --Q1.4
 SELECT p.product_id, p.category, COALESCE(SUM(o.quantity), 0) AS total_quantity
@@ -91,7 +113,16 @@ GROUP BY c.customer_id
 ORDER BY total_spent DESC;
 
 --Q2.2
-
+WITH monthly_sales AS (
+    SELECT strftime('%Y-%m', order_date) AS sales_month, SUM(unit_price * quantity) AS revenue
+    FROM orders
+    GROUP BY sales_month
+)
+SELECT 
+    sales_month, 
+    revenue,
+    SUM(revenue) OVER (ORDER BY sales_month) AS running_total
+FROM monthly_sales;
 
 --Q2.3
 SELECT p.category, p.product_id, p.product_name, COALESCE(SUM(o.quantity * o.unit_price), 0) AS total_sold
@@ -110,7 +141,7 @@ SELECT category, product_id, product_name AS top_products, total_sold
 FROM ranked_products
 WHERE rank1 = 1;
 
---Q2.4
+--Q2.4 /(window function*)
 WITH daily_sales AS (
     SELECT DATE(order_date) AS sale_date, SUM(unit_price * quantity) AS daily_revenue
     FROM orders
@@ -140,7 +171,7 @@ GROUP BY c.customer_id, c.customer_name;
 
 --Q4.1
 CREATE TABLE IF NOT EXISTS shipment_tracking(
-    shipment_id INT PRIMARY KEY,
+    shipment_id INT PRIMARY KEY AUTOINCREMENT,
     order_id INT,
     product_id INT,
     customer_id INT,

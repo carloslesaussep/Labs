@@ -130,7 +130,7 @@ customers_df = clean_duplicate_customers(customers_df)
 
 #1
 
-customers_df["city"] = customers_df["city"].str.lower()
+customers_df["city"] = customers_df["city"].str.strip().str.lower()
 
 #2
 
@@ -182,7 +182,7 @@ print(len(clickstream_df))
 #3
 
 def mov_vs_desk(df):
-    percentages = df['device_type'].value_counts(normalize=True) * 100
+    percentages = df['device_type'].value_counts(normalize=True) * 100   ##normalize = Internally, normalize=True divides the count of each unique category by the total number of valid observations in the Series (excluding nulls).
     return percentages
 mov_vs_dsk_perc = mov_vs_desk(clickstream_df)
 print("Percentages:")
