@@ -1,0 +1,31 @@
+Q1.
+An RDD (Resilient Distributed Dataset) is the fundamental data structure of Apache Spark—a fault-tolerant collection of data elements that can be processed in parallel.
+-Resilient: Fault-tolerant; if data is lost, it can be automatically recomputed using its lineage history.
+-Distributed: Data is split into partitions and stored across multiple nodes in a cluster.
+-Dataset: A collection of partitioned data elements (can be structured or unstructured).
+
+Q2.
+On one hand, transformations are operations that create a new RDD from an existing one, while actions are operations that trigger execution, compute the RDD, and return a result to the driver program or write it to storage.
+
+Q3.
+Lazy evaluation refers to how sparc does not directly execute transformations when you recall them, but rather records them for when they are recalled.
+
+Q4.
+
+
+Q5.
+Narrow transformations stay within the same node. Wide transformations move across diferente nodes and group keys at once.
+
+Q6.
+Python easier to use and most popular for data science and Scala is the native language so it offers sharper performance and gets new features first.
+
+Q7.
+Spark Context is the entry level tool used to create RDDs (resilient distributed dataset!!). Soark Session is a the latest tool that combines Spark Context and SQL tools into a one so you can easily work with DataFrames and modern data analysis without managing multiple components.
+
+Q8.
+RDDs are Low-level, unstructured/semi-structured data collection with no automatization programmed over them, while DataFrames imply a level of organization over the data and the performance.
+
+Q9.
+The driver program is the master controller of a Spark application. It runs your main code, creates the SparkSession, translates your operations into an execution plan, and assigns tasks to the worker nodes.
+
+Q10.
